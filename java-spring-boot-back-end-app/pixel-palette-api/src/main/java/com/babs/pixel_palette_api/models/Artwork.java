@@ -3,6 +3,13 @@ package com.babs.pixel_palette_api.models;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+// ENTITY NOTES:
+// @Entity           = this class represents a real database table
+// @Id               = marks the column that uniquely identifies each row
+// @GeneratedValue    = the database auto-assigns this number, I never set it myself
+// @ManyToOne + @JoinColumn = builds a foreign key relationship (many of these belong to one of those)
+// @Lob               = this column can hold way more text than normal (for big data)
+
 @Entity
 public class Artwork {
 

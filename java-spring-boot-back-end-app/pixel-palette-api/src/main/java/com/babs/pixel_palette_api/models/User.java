@@ -5,6 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+// ENTITY NOTES:
+// @Entity           = this class represents a real database table
+// @Id               = marks the column that uniquely identifies each row
+// @GeneratedValue    = the database auto-assigns this number, I never set it myself
+// @ManyToOne + @JoinColumn = builds a foreign key relationship (many of these belong to one of those)
+// @Lob               = this column can hold way more text than normal (for big data)
+
 @Entity // This annotation specifies that the class is an entity and is mapped to a database table
 public class User {
 
