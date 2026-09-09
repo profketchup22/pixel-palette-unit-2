@@ -67,3 +67,9 @@
 .overlay-box p:hover {
     color: #f355e5;
 }
+
+.overlay-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    text-align: center;
+}

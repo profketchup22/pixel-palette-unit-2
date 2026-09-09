@@ -1,18 +1,43 @@
-import { useState } from 'react';
-import './LoginOverlay.css';
 
-function LoginOverlay({ isOpen, onClose }) {
+import './LoginOverlay.css';
+import { useState } from 'react';
+
+function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
     const [isRegistering, setIsRegistering] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     if (!isOpen) {
         return null;
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        console.log('Submitted:', username, password, isRegistering ? 'register' : 'login');
+        setError('');
+
+        const endpoint = isRegistering
+            ? 'http://localhost:8080/api/users/register'
+            : 'http://localhost:8080/api/users/login';
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (!isRegistering && data === null) {
+                setError('Incorrect username or password.');
+            } else {
+                onLoginSuccess(data);
+                onClose();
+            }
+        } catch (err) {
+            setError('Could not connect to the server.');
+        }
     }
 
     return (
@@ -33,6 +58,7 @@ function LoginOverlay({ isOpen, onClose }) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {error && <p className="overlay-error">{error}</p>}
                     <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
                 </form>
                 <p onClick={() => setIsRegistering(!isRegistering)}>

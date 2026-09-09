@@ -17,6 +17,7 @@ import java.util.List;
 // @RequestBody   = turns incoming JSON into a real Java object automatically
 // @PathVariable  = grabs a value straight out of the URL itself
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/artworks")
 public class ArtworkController {
