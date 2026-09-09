@@ -1,0 +1,106 @@
+/* ToolPanel left side bar */
+
+.tool-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.75rem;
+    background-color: #2d1b4e;
+    border-right: 3px solid #333;
+    min-width: 120px;
+    max-width: 140px;
+    /* makes the toolbar scrollable*/
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+/* each section groups a label with its control */
+.tool-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem; 
+}
+
+/* label above each control */
+.tool-label {
+    color: #f0f0f0;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* brush size slider */
+.brush-slider {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* tool selector buttons container*/
+.tool-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* tool selector buttons */
+.tool-button {
+    padding: 0.4rem;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+/* highlights the active tool */
+.tool-button.active {
+    background-color: #b596f9;
+    color: #1a1a2e;
+    border-color: #b596f9;
+}
+
+/* clear button*/
+.clear-button {
+    padding: 0.4rem 0.75rem;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    width: fit-content;
+}
+
+/*scrollbar styling forthe tool panel*/
+.tool-panel::-webkit-scrollbar {
+    width: 6px;
+}
+/*the background track of the scrollbar*/
+.tool-panel::-webkit-scrollbar-track {
+    background-color: #1a1a2e;
+}
+
+/* the dragabble part of the scrollbar*/
+.tool-panel::-webkit-scrollbar-thumb {
+    background-color: #b596f9;
+    border-radius: 10px;
+}
+
+.action-button:hover {
+    background-color: #ff3b3b;
+    border-color: #ff3b3b;
+}
+
+@media (max-width: 768px) {
+    .tool-panel {
+        max-width: 100%;
+        width: 100%;
+        min-width: unset;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+        overflow-y: visible;
+    }
+}
+

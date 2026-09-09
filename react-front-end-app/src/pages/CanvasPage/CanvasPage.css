@@ -1,0 +1,23 @@
+.canvas-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    /* takes the full viewport height (100%viewport height)
+    subtracts a fixed 120 pixels from the height*/
+    min-height: calc(100vh - 120px);
+}
+
+@media (max-width: 768px) {
+    .canvas-page {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .canvas-page {
+        padding: 0.5rem;
+        gap:0.5rem;
+    }
+}

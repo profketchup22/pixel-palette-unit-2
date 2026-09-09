@@ -1,0 +1,8 @@
+.canvas {
+    display: block;
+    background-color: white;
+    border: 3px solid #333;
+    cursor: crosshair;
+    width: 900px;
+    height: 600px
+}

@@ -1,0 +1,22 @@
+/* a single stamp in the picker*/
+
+.stamp-item {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+/* highlights the currently selected stamp */
+
+.stamp-item.active {
+    border: 2px solid #fff;
+    border-radius:6px;
+}
+
+.stamp-image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+}

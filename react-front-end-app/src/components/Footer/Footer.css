@@ -1,0 +1,25 @@
+/* Footer component styles */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #2d1b4e;
+  border-top: 3px solid #b596f9;
+  margin-top: auto;
+  gap: 1rem;
+}
+
+.footer-text {
+  margin: 0;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #f0f0f0;
+}
+
+/* small divider between footer items */
+.footer-divider {
+  color: #b596f9;
+  font-size: 1.2rem;
+}
