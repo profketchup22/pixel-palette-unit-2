@@ -21,3 +21,11 @@
         gap:0.5rem;
     }
 }
+
+.save-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
