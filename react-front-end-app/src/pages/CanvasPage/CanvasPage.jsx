@@ -39,9 +39,20 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
         ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
 
+    function isCanvasBlank(canvas) {
+        const blankCanvas = document.createElement('canvas')
+        blankCanvas.width = canvas.width
+        blankCanvas.height = canvas.height
+        return canvas.toDataURL() === blankCanvas.toDataURL()
+    }
     async function handleSave() {
     const canvas = canvasRef.current
     if (!canvas) return
+
+        if (isCanvasBlank(canvas)) {
+        setSaveMessage('Please draw something before saving.')
+        return
+    }
 
     const imageData = canvas.toDataURL('image/png') // reads everything currently painted on the canvas and converts it into one long text string
 
@@ -78,6 +89,11 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
                 onClear={handleClear}
                 selectedStamp={selectedStamp}
                 onSelectStamp={setSelectedStamp}
+                currentUser={currentUser}
+                title={title}
+                setTitle={setTitle}
+                onSave={handleSave}
+                saveMessage={saveMessage}
             />
 
             <Canvas
@@ -88,22 +104,6 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
                 selectedStamp={selectedStamp}
             />
 
-            <div className="save-controls">
-                {currentUser ? (
-                    <>
-                        <input
-                            type="Text"
-                            placeholder="Enter title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <button onClick={handleSave}>Save</button>
-                        {saveMessage && <p>{saveMessage}</p>}
-                    </>
-                ) : (
-                    <p>Please log in to save your artwork.</p>
-                )}
-            </div>
         </div>
     )
 }

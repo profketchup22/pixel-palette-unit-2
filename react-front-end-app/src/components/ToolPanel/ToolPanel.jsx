@@ -74,6 +74,28 @@ function ToolPanel(props) {
             onSelectStamp={props.onSelectStamp}
         />
             ) : null}
+
+            {/*save artwork section shows if someone is logged in*/}
+            {props.currentUser ? (
+                <div className="tool-section save-section">
+                <label className="tool-label">Title</label>
+                <input
+                    type="text"
+                    placeholder="Enter title"
+                    value={props.title}
+                    onChange={(e) => props.setTitle(e.target.value)}
+                    className="save-input"
+        />
+                <button className="save-button" onClick={props.onSave}>
+                    💾 Save
+                </button>
+            {props.saveMessage && <p className="save-message">{props.saveMessage}</p>}
+        </div>
+    ) : (
+        <div className="tool-section">
+            <p className="tool-label">Log in to save your art</p>
+        </div>
+)}
       
 
             {/*clear button */}

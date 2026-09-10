@@ -104,3 +104,45 @@
     }
 }
 
+.save-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.save-input {
+    padding: 0.4rem;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.save-input:focus {
+    outline: none;
+    border-color: #b596f9;
+}
+
+.save-button {
+    padding: 0.4rem 0.75rem;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    width: fit-content;
+}
+
+.save-button:hover {
+    background-color: #b596f9;
+    color: #1a1a2e;
+    border-color: #b596f9;
+}
+
+.save-message {
+    color: #f0f0f0;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
