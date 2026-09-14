@@ -41,9 +41,10 @@ function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) { // rec
         img.onload = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height) // clear the canvas before drawing the new image
             ctx.drawImage(img, 0, 0) // draw the image onto the canvas
+            setTitle(editingArtwork.title)
         }
+
         img.src = editingArtwork.imageData
-        setTitle(editingArtwork.title)
     }, [editingArtwork])
 
     //handleClear wipes the canvas clean
