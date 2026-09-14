@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../../pages/Gallery/Gallery.css'
 
-function Gallery({ currentUser }) { //recieves currentUser as a prop from App.jsx
+function Gallery({ currentUser, setEditingArtwork }) { // receives currentUser and setEditingArtwork as props from App.jsx
     const [artworks, setArtworks] = useState([]) // state to hold the user's artworks starts as an empty list
+    const navigate = useNavigate() // hook to programmatically navigate to different routes
 
     useEffect(() => {
         if (!currentUser) return // if no user is logged in, don't fetch artworks
@@ -34,6 +36,12 @@ function Gallery({ currentUser }) { //recieves currentUser as a prop from App.js
                 console.error('Error fetching artworks:', error)
             }
         }
+
+        function handleEdit(artwork) {
+            setEditingArtwork(artwork)
+            navigate('/canvas') // navigate to the canvas page for editing
+        }
+
     return (
         <div className="gallery-page">
             <h1>My Gallery</h1>
@@ -47,6 +55,7 @@ function Gallery({ currentUser }) { //recieves currentUser as a prop from App.js
                         <div key={artwork.id} className="gallery-item">
                             <img src={artwork.imageData} alt={artwork.title} />
                             <p>{artwork.title}</p>
+                            <button onClick={() => handleEdit(artwork)}>Edit</button>
                             <button onClick={() => handleDelete(artwork.id)}>Delete</button>
                         </div>
                     ))}

@@ -10,6 +10,7 @@ import Gallery from './pages/Gallery/Gallery'
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
+    const [editingArtwork, setEditingArtwork] = useState(null)
 
     return (
      <div className="app">
@@ -17,9 +18,9 @@ function App() {
         <main className="main-component">
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/canvas" element={<CanvasPage currentUser={currentUser} />} /> {/* component will receive the currentUser as a prop */}
+            <Route path="/canvas" element={<CanvasPage currentUser={currentUser} editingArtwork={editingArtwork} setEditingArtwork={setEditingArtwork} />} /> {/* component will receive the currentUser as a prop */}
             <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery currentUser={currentUser} />} />
+            <Route path="/gallery" element={<Gallery currentUser={currentUser} setEditingArtwork={setEditingArtwork} />} />
         </Routes>
      </main>
      <Footer />

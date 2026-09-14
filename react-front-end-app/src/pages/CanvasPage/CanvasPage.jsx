@@ -1,12 +1,12 @@
 
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Canvas from '../../components/Canvas/Canvas'
 import ToolPanel from '../../components/ToolPanel/ToolPanel'
 import './CanvasPage.css'
 
 
-function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App.jsx
+function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) { // receives currentUser and editingArtwork as props from App.jsx
 
     //setting up defaults for canvas page
 
@@ -29,6 +29,22 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
 
     const [title, setTitle] = useState('')
     const [saveMessage, setSaveMessage] = useState('')
+
+    useEffect(() => {
+        if (!editingArtwork) return
+    
+        const canvas = canvasRef.current
+        if (!canvas) return
+        const ctx = canvas.getContext('2d')
+
+        const img = new Image()
+        img.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height) // clear the canvas before drawing the new image
+            ctx.drawImage(img, 0, 0) // draw the image onto the canvas
+        }
+        img.src = editingArtwork.imageData
+        setTitle(editingArtwork.title)
+    }, [editingArtwork])
 
     //handleClear wipes the canvas clean
     // clearRect erases everythin from 0 0 to width and height of canvas
@@ -56,9 +72,13 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
 
     const imageData = canvas.toDataURL('image/png') // reads everything currently painted on the canvas and converts it into one long text string
 
+    const isEditing = editingArtwork !== null
+    const url = isEditing ? `http://localhost:8080/api/artworks/${editingArtwork.id}` : 'http://localhost:8080/api/artworks'
+    const method = isEditing ? 'PUT' : 'POST'
+
     try {
-        const response = await fetch('http://localhost:8080/api/artworks', {
-            method: 'POST',
+        const response = await fetch(url, {
+            method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: title,
@@ -69,6 +89,8 @@ function CanvasPage({ currentUser }) { //recieves currentUser as a prop from App
 
         if (response.ok) {
             setSaveMessage('Image saved successfully!')
+            setEditingArtwork(null) // reset editingArtwork after saving
+            setTitle('') // reset title after saving
         } else {
             setSaveMessage('Failed to save image.')
         }
