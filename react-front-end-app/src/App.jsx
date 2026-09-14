@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/canvas" element={<CanvasPage currentUser={currentUser} />} /> {/* component will receive the currentUser as a prop */}
             <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/gallery" element={<Gallery currentUser={currentUser} />} />
         </Routes>
      </main>
      <Footer />
