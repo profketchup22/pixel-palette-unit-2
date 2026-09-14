@@ -1,0 +1,30 @@
+/* stamp collection toggle*/
+.stamp-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* button that toggles the stamp collection*/
+.stamp-toggle-button {
+    padding:0.4rem;
+    background-color: #1a1a2e
+    color: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.stamp-toggle-button:hover {
+    background-color: #b596f9;
+    border-color: #b596f9
+}
+
+/* container for stamp items*/
+.stamp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
