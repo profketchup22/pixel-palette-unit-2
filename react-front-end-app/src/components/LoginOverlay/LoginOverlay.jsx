@@ -27,7 +27,8 @@ function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
                 body: JSON.stringify({ username, password }),
             });
 
-        const data = await response.json();
+    const text = await response.text(); 
+    const data = text ? JSON.parse(text) : null; 
 
             if (data === null) { 
             setError(isRegistering ? 'That username is already taken.' : 'Incorrect username or password.');
@@ -36,7 +37,7 @@ function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
         onClose();
 }
         } catch (err) {
-            setError('Could not connect to the server.');
+            setError('Could not connect to the server');
         }
     }
 

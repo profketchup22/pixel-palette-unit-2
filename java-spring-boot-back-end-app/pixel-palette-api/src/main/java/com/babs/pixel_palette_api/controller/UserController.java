@@ -40,16 +40,6 @@ public class UserController {
         return userRepository.save(newUser);
     }
 
-    @PostMapping("/register")
-    public User register(@RequestBody User newUser) {
-        User existingUser = userRepository.findByUsername(newUser.getUsername());
-        if (existingUser != null) {
-            return null;
-        }
-
-        return userRepository.save(newUser);
-    }
-
     @PostMapping("/login")
     public User login(@RequestBody User loginAttempt) {
         User found = userRepository.findByUsername(loginAttempt.getUsername());
