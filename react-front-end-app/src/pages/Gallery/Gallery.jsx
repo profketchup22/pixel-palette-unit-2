@@ -16,8 +16,7 @@ function Gallery({ currentUser, setEditingArtwork }) { // receives currentUser a
                 const data = await response.json()
                 setArtworks(data)
             } catch (error) {
-                console.error('Error fetching artworks:', error)
-            }
+            } // fetch failed silently artworks list stays empty
      }
 
         fetchArtworks()
@@ -36,8 +35,7 @@ function Gallery({ currentUser, setEditingArtwork }) { // receives currentUser a
             setArtworks(artworks.filter((artwork) => artwork.id !== id))
             }
         } catch (error) {
-        console.error('Error fetching artworks:', error)
-    }
+    } // delete failed silently — artwork stays in the list
 }
         function handleEdit(artwork) {
             setEditingArtwork(artwork)
