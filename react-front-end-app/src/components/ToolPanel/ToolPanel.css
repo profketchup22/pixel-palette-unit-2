@@ -68,7 +68,8 @@
     border: 2px solid #555;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    text-align: left;
     width: fit-content;
 }
 
@@ -131,8 +132,8 @@
     border: 2px solid #555;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.8rem;
-    width: fit-content;
+    font-size: 0.9rem;
+    text-align: left;
 }
 
 .save-button:hover {

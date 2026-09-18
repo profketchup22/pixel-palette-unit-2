@@ -23,20 +23,22 @@ function Gallery({ currentUser, setEditingArtwork }) { // receives currentUser a
         fetchArtworks()
     }, [currentUser]) // re-run the effect whenever currentUser changes
 
-        async function handleDelete(id) {
-            try {
-                const response = await fetch(`http://localhost:8080/api/artworks/${id}`, {
-                    method: 'DELETE',
-                })
+    async function handleDelete(id) {
+        const confirmed = window.confirm('Are you sure you want to delete this piece? This cannot be undone.') // ← NEW
+        if (!confirmed) return
 
-                if (response.ok) {
-                    setArtworks(artworks.filter((artwork) => artwork.id !== id)) // remove the deleted artwork from state
-                }
-            } catch (error) {
-                console.error('Error fetching artworks:', error)
+        try {
+            const response = await fetch(`http://localhost:8080/api/artworks/${id}`, {
+                method: 'DELETE',
+            })
+
+            if (response.ok) {
+            setArtworks(artworks.filter((artwork) => artwork.id !== id))
             }
-        }
-
+        } catch (error) {
+        console.error('Error fetching artworks:', error)
+    }
+}
         function handleEdit(artwork) {
             setEditingArtwork(artwork)
             navigate('/canvas') // navigate to the canvas page for editing
@@ -44,24 +46,29 @@ function Gallery({ currentUser, setEditingArtwork }) { // receives currentUser a
 
     return (
         <div className="gallery-page">
-            <h1>My Gallery</h1>
-            {!currentUser ? (
-                <p>Log in to see your saved art.</p>
-            ) : artworks.length === 0 ? (
-                <p>You haven't saved anything yet.</p>
-            ) : (
+            <div className="gallery-card">
+                <h1 className="gallery-title">My Gallery</h1>
+                {!currentUser ? (
+                    <p className="gallery-empty-message">Log in to see your saved art.</p>
+                ) : artworks.length === 0 ? (
+                    <p className="gallery-empty-message">You haven't saved anything yet.</p>
+                ) : (
                 <div className="gallery-grid">
                     {artworks.map((artwork) => (
                         <div key={artwork.id} className="gallery-item">
                             <img src={artwork.imageData} alt={artwork.title} />
                             <p>{artwork.title}</p>
-                            <button onClick={() => handleEdit(artwork)}>Edit</button>
-                            <button onClick={() => handleDelete(artwork.id)}>Delete</button>
+                            <div className="gallery-item-buttons">
+                                    <button className="gallery-item-button" onClick={() => handleEdit(artwork)}>Edit</button>
+                                    <button className="gallery-item-button" onClick={() => handleDelete(artwork.id)}>Delete</button>
+                                </div>
                         </div>
                     ))}
                 </div>
             )}
         </div>
+        </div>
+
     )
 }
 

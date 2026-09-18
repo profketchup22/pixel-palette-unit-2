@@ -37,12 +37,17 @@ public class ArtworkController {
 
     @PutMapping("/{id}")
     public Artwork updateArtwork(@PathVariable int id, @RequestBody Artwork updatedArtwork) {
+        if (!artworkRepository.existsById(id)) {
+            return null;
+        }
         updatedArtwork.setId(id);
         return artworkRepository.save(updatedArtwork);
     }
 
     @DeleteMapping("/{id}")
     public void deleteArtwork(@PathVariable int id) {
-        artworkRepository.deleteById(id);
+        if (artworkRepository.existsById(id)) {
+            artworkRepository.deleteById(id);
+        }
     }
 }

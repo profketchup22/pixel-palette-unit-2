@@ -27,6 +27,16 @@ public class UserController {
 
     @PostMapping("/register")
     public User register(@RequestBody User newUser) {
+        if (newUser.getUsername() == null || newUser.getUsername().isBlank()
+                || newUser.getPassword() == null || newUser.getPassword().isBlank()) {
+            return null;
+        }
+
+        User existingUser = userRepository.findByUsername(newUser.getUsername());
+        if (existingUser != null) {
+            return null;
+        }
+
         return userRepository.save(newUser);
     }
 
