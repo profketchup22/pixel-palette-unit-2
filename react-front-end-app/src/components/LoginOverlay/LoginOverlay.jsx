@@ -27,14 +27,14 @@ function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
+        const data = await response.json();
 
-            if (!isRegistering && data === null) {
-                setError('Incorrect username or password.');
-            } else {
-                onLoginSuccess(data);
-                onClose();
-            }
+            if (data === null) { 
+            setError(isRegistering ? 'That username is already taken.' : 'Incorrect username or password.');
+        } else {
+        onLoginSuccess(data);
+        onClose();
+}
         } catch (err) {
             setError('Could not connect to the server.');
         }
@@ -43,7 +43,7 @@ function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
     return (
         <div className="overlay-backdrop">
             <div className="overlay-box">
-                <button onClick={onClose}>X</button>
+                <button className="overlay-close" onClick={onClose}>x</button>
                 <h2>{isRegistering ? 'Register' : 'Login'}</h2>
                 <form onSubmit={handleSubmit}>
                     <input
