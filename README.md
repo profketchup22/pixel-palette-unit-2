@@ -62,7 +62,7 @@ https://docs.google.com/document/d/15PYjO0SuDCx41vgPXYTJQqAmv2iInu2grDFqYUhPdlg/
 
 ## Entity Relationship Diagram
 
-[PASTE YOUR ERD LINK HERE — e.g. https://dbdiagram.io/d/6a8d0f0afd15a881e5ec7398]
+https://dbdiagram.io/d/6a8d0f0afd15a881e5ec7398]
 
 ## Unsolved Problems & Future Features
 
