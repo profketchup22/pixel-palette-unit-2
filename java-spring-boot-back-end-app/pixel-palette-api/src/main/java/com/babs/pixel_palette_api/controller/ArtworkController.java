@@ -37,12 +37,12 @@ public class ArtworkController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Artwork> getArtworksByUser(@PathVariable int userId) {
+    public List<Artwork> getArtworksByUser(@PathVariable("userId") int userId) {
         return artworkRepository.findByUserId(userId);
     }
 
     @PutMapping("/{id}")
-    public Artwork updateArtwork(@PathVariable int id, @RequestBody Artwork updatedArtwork) {
+    public Artwork updateArtwork(@PathVariable("id") int id, @RequestBody Artwork updatedArtwork) {
         if (!artworkRepository.existsById(id)) { // Check if the artwork exists before updating
             return null;
         }
@@ -51,7 +51,7 @@ public class ArtworkController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtwork(@PathVariable int id) { // this method returns nothing, because there's nothing meaningful to send back after deleting something
+    public void deleteArtwork(@PathVariable("id") int id) { // this method returns nothing, because there's nothing meaningful to send back after deleting something
         if (artworkRepository.existsById(id)) {
             artworkRepository.deleteById(id);
         }
