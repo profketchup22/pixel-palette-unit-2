@@ -88,11 +88,6 @@
     border-radius: 10px;
 }
 
-.action-button:hover {
-    background-color: #ff3b3b;
-    border-color: #ff3b3b;
-}
-
 @media (max-width: 768px) {
     .tool-panel {
         max-width: 100%;

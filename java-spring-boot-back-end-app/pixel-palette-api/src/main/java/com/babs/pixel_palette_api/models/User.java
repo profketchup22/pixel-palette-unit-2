@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 // @ManyToOne + @JoinColumn = builds a foreign key relationship (many of these belong to one of those)
 // @Lob               = this column can hold way more text than normal (for big data)
 
-@Entity // This annotation specifies that the class is an entity and is mapped to a database table
+@Entity // This annotation specifies that the class is mapped to a database table
 public class User {
 
     @Id // This annotation specifies the primary key of an entity Every table needs exactly one of these.

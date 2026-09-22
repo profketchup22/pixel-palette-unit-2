@@ -27,6 +27,12 @@ public class ArtworkController {
 
     @PostMapping
     public Artwork createArtwork(@RequestBody Artwork newArtwork) {
+        if (newArtwork.getTitle() == null || newArtwork.getTitle().isBlank()
+                || newArtwork.getImageData() == null || newArtwork.getImageData().isBlank()
+                || newArtwork.getUser() == null) {
+            return null;
+        }
+
         return artworkRepository.save(newArtwork);
     }
 
@@ -37,15 +43,15 @@ public class ArtworkController {
 
     @PutMapping("/{id}")
     public Artwork updateArtwork(@PathVariable int id, @RequestBody Artwork updatedArtwork) {
-        if (!artworkRepository.existsById(id)) {
+        if (!artworkRepository.existsById(id)) { // Check if the artwork exists before updating
             return null;
         }
-        updatedArtwork.setId(id);
+        updatedArtwork.setId(id); // manually stamps the correct id onto the object before saving
         return artworkRepository.save(updatedArtwork);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtwork(@PathVariable int id) {
+    public void deleteArtwork(@PathVariable int id) { // this method returns nothing, because there's nothing meaningful to send back after deleting something
         if (artworkRepository.existsById(id)) {
             artworkRepository.deleteById(id);
         }
