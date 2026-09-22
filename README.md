@@ -31,32 +31,39 @@ Pixel Palette is a nostalgic drawing app inspired by Kid Pix — but in the brow
 To run this project locally, you'll need **Node.js**, **Java 21**, **MySQL**, and **Git** installed.
 
 ### 1. Clone the repo
+
 ```
 git clone https://github.com/profketchup22/pixel-palette-unit-2.git
 cd pixel-palette-unit-2
 ```
 
 ### 2. Set up the database
+
 - Open MySQL Workbench and create a new schema called `pixel_palette_db`
 - Note your MySQL username, password, and port number
 
 ### 3. Configure the backend
+
 - Navigate to `java-spring-boot-back-end-app/pixel-palette-api/src/main/resources/`
 - Create a file called `application-secrets.properties` (this file is gitignored and won't be in the repo)
 - Add the following, replacing with your own MySQL credentials:
+
 ```
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
 ```
+
 - Open the `java-spring-boot-back-end-app` folder in IntelliJ IDEA
 - Run the `PixelPaletteApiApplication` main class — Hibernate will auto-create the tables
 
 ### 4. Start the frontend
+
 ```
 cd react-front-end-app
 npm install
 npm run dev
 ```
+
 - Open the localhost URL shown in your terminal (usually `http://localhost:5173`)
 - Make sure both the backend (IntelliJ) and frontend (VS Code terminal) are running at the same time
 

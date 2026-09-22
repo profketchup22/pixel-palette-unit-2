@@ -94,12 +94,12 @@ function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) {
         }),
       });
 
-      const text = await response.text() // an empty body means the backend rejected it
+      const text = await response.text(); // an empty body means the backend rejected it
 
       if (response.ok && text) {
         setSaveMessage("Image saved successfully!");
         setEditingArtwork(null); // reset editingArtwork after saving
-        setTitle(''); // reset title after saving
+        setTitle(""); // reset title after saving
       } else {
         setSaveMessage("Failed to save image.");
       }
