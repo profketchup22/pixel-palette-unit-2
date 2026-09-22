@@ -30,6 +30,10 @@ Pixel Palette is a nostalgic drawing app inspired by Kid Pix — but in the brow
 
 To run this project locally, you'll need **Node.js**, **Java 21**, **MySQL**, and **Git** installed.
 
+### Troubleshooting
+
+If the Gallery page doesn't load your artwork, make sure IntelliJ imported the project from `pom.xml` so Maven applies the compiler settings Spring needs. Opening `java-spring-boot-back-end-app/pixel-palette-api/pom.xml` directly and choosing "Open as Project" is the most reliable way.
+
 ### 1. Clone the repo
 
 ```
