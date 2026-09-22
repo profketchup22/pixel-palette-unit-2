@@ -1,134 +1,133 @@
+import { useState, useRef, useEffect } from "react";
+import Canvas from "../../components/Canvas/Canvas";
+import ToolPanel from "../../components/ToolPanel/ToolPanel";
+import "./CanvasPage.css";
 
+function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) {
+  // receives currentUser and editingArtwork as props from App.jsx
 
-import { useState, useRef, useEffect } from 'react'
-import Canvas from '../../components/Canvas/Canvas'
-import ToolPanel from '../../components/ToolPanel/ToolPanel'
-import './CanvasPage.css'
+  //setting up defaults for canvas page
 
+  // tracks the currently selected brush color
+  const [color, setColor] = useState("#000000");
 
-function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) { // receives currentUser and editingArtwork as props from App.jsx
+  // how thick the brushstroke is
+  const [brushSize, setBrushSize] = useState(5);
 
-    //setting up defaults for canvas page
+  // tracks whether the user is in brush or stamp mode
+  const [selectedTool, setSelectedTool] = useState("brush");
 
-    // tracks the currently selected brush color
-    const [color, setColor] = useState('#000000')
+  //selectedStamp tracks whether a stamp image is currently selected
+  //starts as null meaning no stamp is selected yet
+  const [selectedStamp, setSelectedStamp] = useState(null);
 
-    // how thick the brushstroke is
-    const [brushSize, setBrushSize] = useState(5)
+  // canvasRef gives CanvasPage direct access to the canvas element
+  // so we can use clear to reach into the actual canvas
+  const canvasRef = useRef(null);
 
-    // tracks whether the user is in brush or stamp mode
-    const [selectedTool, setSelectedTool] = useState('brush')
+  const [title, setTitle] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
 
-    //selectedStamp tracks whether a stamp image is currently selected
-    //starts as null meaning no stamp is selected yet
-    const [selectedStamp, setSelectedStamp] = useState(null)
+  useEffect(() => {
+    if (!editingArtwork) return;
 
-    // canvasRef gives CanvasPage direct access to the canvas element
-    // so we can use clear to reach into the actual canvas
-    const canvasRef = useRef(null)
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
 
-    const [title, setTitle] = useState('')
-    const [saveMessage, setSaveMessage] = useState('')
+    const img = new Image();
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas before drawing the new image
+      ctx.drawImage(img, 0, 0); // draw the image onto the canvas
+      setTitle(editingArtwork.title);
+    };
 
-    useEffect(() => {
-        if (!editingArtwork) return
-    
-        const canvas = canvasRef.current
-        if (!canvas) return
-        const ctx = canvas.getContext('2d')
+    img.src = editingArtwork.imageData;
+  }, [editingArtwork]);
 
-        const img = new Image()
-        img.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height) // clear the canvas before drawing the new image
-            ctx.drawImage(img, 0, 0) // draw the image onto the canvas
-            setTitle(editingArtwork.title)
-        }
+  //handleClear wipes the canvas clean
+  // clearRect erases everythin from 0 0 to width and height of canvas
+  function handleClear() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
-        img.src = editingArtwork.imageData
-    }, [editingArtwork])
+  function isCanvasBlank(canvas) {
+    const blankCanvas = document.createElement("canvas");
+    blankCanvas.width = canvas.width;
+    blankCanvas.height = canvas.height;
+    return canvas.toDataURL() === blankCanvas.toDataURL();
+  }
+  async function handleSave() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    //handleClear wipes the canvas clean
-    // clearRect erases everythin from 0 0 to width and height of canvas
-    function handleClear() {
-        const canvas = canvasRef.current
-        if (!canvas) return
-        const ctx = canvas.getContext('2d')
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+    if (isCanvasBlank(canvas)) {
+      setSaveMessage("Please draw something before saving.");
+      return;
     }
 
-    function isCanvasBlank(canvas) {
-        const blankCanvas = document.createElement('canvas')
-        blankCanvas.width = canvas.width
-        blankCanvas.height = canvas.height
-        return canvas.toDataURL() === blankCanvas.toDataURL()
-    }
-    async function handleSave() {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const imageData = canvas.toDataURL("image/png"); // reads everything currently painted on the canvas and converts it into one long text string
 
-        if (isCanvasBlank(canvas)) {
-        setSaveMessage('Please draw something before saving.')
-        return
-    }
-
-    const imageData = canvas.toDataURL('image/png') // reads everything currently painted on the canvas and converts it into one long text string
-
-    const isEditing = editingArtwork !== null
-    const url = isEditing ? `http://localhost:8080/api/artworks/${editingArtwork.id}` : 'http://localhost:8080/api/artworks'
-    const method = isEditing ? 'PUT' : 'POST'
+    const isEditing = editingArtwork !== null;
+    const url = isEditing
+      ? `http://localhost:8080/api/artworks/${editingArtwork.id}`
+      : "http://localhost:8080/api/artworks";
+    const method = isEditing ? "PUT" : "POST";
 
     try {
-        const response = await fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                title: title,
-                imageData: imageData,
-                user: { id: currentUser.id }
-            }),
-        })
+      const response = await fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title,
+          imageData: imageData,
+          user: { id: currentUser.id },
+        }),
+      });
 
-        if (response.ok) {
-            setSaveMessage('Image saved successfully!')
-            setEditingArtwork(null) // reset editingArtwork after saving
-            setTitle('') // reset title after saving
-        } else {
-            setSaveMessage('Failed to save image.')
-        }
+      if (response.ok) {
+        setSaveMessage("Image saved successfully!");
+        setEditingArtwork(null); // reset editingArtwork after saving
+        setTitle(""); // reset title after saving
+      } else {
+        setSaveMessage("Failed to save image.");
+      }
     } catch {
-        setSaveMessage('Error: Could not connect to the server.');
+      setSaveMessage("Error: Could not connect to the server.");
     }
+  }
+
+  return (
+    <div className="canvas-page">
+      <ToolPanel
+        color={color}
+        setColor={setColor}
+        brushSize={brushSize}
+        setBrushSize={setBrushSize}
+        selectedTool={selectedTool}
+        setSelectedTool={setSelectedTool}
+        onClear={handleClear}
+        selectedStamp={selectedStamp}
+        onSelectStamp={setSelectedStamp}
+        currentUser={currentUser}
+        title={title}
+        setTitle={setTitle}
+        onSave={handleSave}
+        saveMessage={saveMessage}
+      />
+
+      <Canvas
+        canvasRef={canvasRef}
+        color={color}
+        brushSize={brushSize}
+        selectedTool={selectedTool}
+        selectedStamp={selectedStamp}
+      />
+    </div>
+  );
 }
 
-    return (
-        <div className="canvas-page">
-            <ToolPanel
-                color={color}
-                setColor={setColor}
-                brushSize={brushSize}
-                setBrushSize={setBrushSize}
-                selectedTool={selectedTool}
-                setSelectedTool={setSelectedTool}
-                onClear={handleClear}
-                selectedStamp={selectedStamp}
-                onSelectStamp={setSelectedStamp}
-                currentUser={currentUser}
-                title={title}
-                setTitle={setTitle}
-                onSave={handleSave}
-                saveMessage={saveMessage}
-            />
-
-            <Canvas
-                canvasRef={canvasRef}
-                color={color}
-                brushSize={brushSize}
-                selectedTool={selectedTool}
-                selectedStamp={selectedStamp}
-            />
-
-        </div>
-    )
-}
-
-export default CanvasPage
+export default CanvasPage;
