@@ -27,6 +27,12 @@ public class ArtworkController {
 
     @PostMapping
     public Artwork createArtwork(@RequestBody Artwork newArtwork) {
+        if (newArtwork.getTitle() == null || newArtwork.getTitle().isBlank()
+                || newArtwork.getImageData() == null || newArtwork.getImageData().isBlank()
+                || newArtwork.getUser() == null) {
+            return null;
+        }
+
         return artworkRepository.save(newArtwork);
     }
 
