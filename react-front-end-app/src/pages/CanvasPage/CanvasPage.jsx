@@ -69,6 +69,12 @@ function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) {
       return;
     }
 
+    if (title.trim() === "") {
+      // stops a piece from being saved with no title
+      setSaveMessage("Please add a title before saving.");
+      return;
+    }
+
     const imageData = canvas.toDataURL("image/png"); // reads everything currently painted on the canvas and converts it into one long text string
 
     const isEditing = editingArtwork !== null;
@@ -88,10 +94,12 @@ function CanvasPage({ currentUser, editingArtwork, setEditingArtwork }) {
         }),
       });
 
-      if (response.ok) {
+      const text = await response.text() // an empty body means the backend rejected it
+
+      if (response.ok && text) {
         setSaveMessage("Image saved successfully!");
         setEditingArtwork(null); // reset editingArtwork after saving
-        setTitle(""); // reset title after saving
+        setTitle(''); // reset title after saving
       } else {
         setSaveMessage("Failed to save image.");
       }
