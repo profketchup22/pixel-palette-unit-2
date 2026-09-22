@@ -36,7 +36,7 @@ function LoginOverlay({ isOpen, onClose, onLoginSuccess }) {
         onLoginSuccess(data);
         onClose();
 }
-        } catch (err) {
+        } catch {
             setError('Could not connect to the server');
         }
     }
