@@ -34,7 +34,7 @@ function Header({ currentUser, setCurrentUser }) {
                 <a onClick={() => setShowOverlay(true)}>Log In</a>
             )}
         </nav>
-            <LoginOverlay // ← NEW
+            <LoginOverlay
             isOpen={showOverlay}
             onClose={() => setShowOverlay(false)}
             onLoginSuccess={setCurrentUser}

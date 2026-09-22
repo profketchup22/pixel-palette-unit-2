@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 // ENTITY NOTES:
 // @Entity           = this class represents a real database table
 // @Id               = marks the column that uniquely identifies each row
-// @GeneratedValue    = the database auto-assigns this number, I never set it myself
+// @GeneratedValue    = the database auto-assigns this number, never set it myself
 // @ManyToOne + @JoinColumn = builds a foreign key relationship (many of these belong to one of those)
 // @Lob               = this column can hold way more text than normal (for big data)
 
@@ -19,13 +19,13 @@ public class Artwork {
 
     private String title;
 
-    @Lob // Normal text columns have a size limit that's too small for drawing data "Large Object"
+    @Lob // Large Object makes it so data string can be longer then 255 characters
     private String imageData;
 
     private LocalDateTime createdDate;
 
-    @ManyToOne //  each Artwork points to exactly one User, but a User can have many Artworks.
-    @JoinColumn(name = "user_id") // This annotation specifies the foreign key column in the Artwork table that references the primary key of the User table.
+    @ManyToOne //  each Artwork points to one User, but a User can have many Artworks.
+    @JoinColumn(name = "user_id") // tells Hibernate exactly what to name the foreign key column it creates
     private User user;
 
     public Artwork() {

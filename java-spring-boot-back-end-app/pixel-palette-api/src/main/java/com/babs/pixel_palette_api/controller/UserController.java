@@ -23,7 +23,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired  // this is how the controller gets access to the repository
-    private UserRepository userRepository;
+    private UserRepository userRepository; //dependency injection — instead of the controller building its own tools, the framework delivers them ready-made
 
     @PostMapping("/register")
     public User register(@RequestBody User newUser) {
@@ -35,7 +35,7 @@ public class UserController {
         User existingUser = userRepository.findByUsername(newUser.getUsername());
         if (existingUser != null) {
             return null;
-        }
+        } //blocks a duplicate username from being registered
 
         return userRepository.save(newUser);
     }

@@ -37,15 +37,15 @@ public class ArtworkController {
 
     @PutMapping("/{id}")
     public Artwork updateArtwork(@PathVariable int id, @RequestBody Artwork updatedArtwork) {
-        if (!artworkRepository.existsById(id)) {
+        if (!artworkRepository.existsById(id)) { // Check if the artwork exists before updating
             return null;
         }
-        updatedArtwork.setId(id);
+        updatedArtwork.setId(id); // manually stamps the correct id onto the object before saving
         return artworkRepository.save(updatedArtwork);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtwork(@PathVariable int id) {
+    public void deleteArtwork(@PathVariable int id) { // this method returns nothing, because there's nothing meaningful to send back after deleting something
         if (artworkRepository.existsById(id)) {
             artworkRepository.deleteById(id);
         }
