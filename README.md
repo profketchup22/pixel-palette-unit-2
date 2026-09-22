@@ -2,7 +2,9 @@
 
 Pixel Palette is a nostalgic drawing app inspired by Kid Pix — but in the browser. Users can pick up a brush, choose from a palette of colors, place stamps, and create colorful artwork on a digital canvas. With the addition of a full-stack backend, users can now create an account, save their drawings, and come back to view, edit, or delete their artwork from a personal gallery. The app is designed to be simple, fun, and accessible — whether you're an imaginative kid making silly alien scenes or an adult looking for a creative outlet.
 
-![The drawing canvas](react-front-end-app/public/images/drawexample.png)
+![Drawing Example](react-front-end-app/public/images/drawexample.png)
+
+![My Gallery page](react-front-end-app/public/images/pixgallery.png)
 
 ## Technologies Used
 
