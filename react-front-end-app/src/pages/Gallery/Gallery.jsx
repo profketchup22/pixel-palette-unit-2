@@ -16,8 +16,14 @@ function Gallery({ currentUser, setEditingArtwork }) {
         const response = await fetch(
           `http://localhost:8080/api/artworks/user/${currentUser.id}`,
         );
+
+        if (!response.ok) { // the server had a problem
+          setErrorMessage("Could not load your artwork. Please try again.");
+          return;
+        }
+
         const data = await response.json();
-        setArtworks(data);
+        setArtworks(Array.isArray(data) ? data : []); // only a real list can be mapped over
       } catch {
         setErrorMessage("Could not load your artwork. Please try again.");
       }
